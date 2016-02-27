@@ -16,20 +16,19 @@ namespace Memory
     public class Game
     {
         private const int _tileSize = 60;
-        private const int _tileRows = 4;
-        private const int _tileCols = 4;
+        private const int _tileCount = 16;
         private const int _tileMargin = 5;
 
         private WrapPanel panel;
 
-        Tile[,] tiles;
+        Tile[] tiles;
         
         private List<Tile> _selectedTiles;
 
         public Game(WrapPanel panel)
         {
             this.panel = panel;
-            tiles = new Tile[_tileRows, _tileCols];
+            tiles = new Tile[_tileCount];
         }
 
         public void NewGame()
@@ -104,39 +103,28 @@ namespace Memory
         {
             panel.Children.Clear();
 
-            for (int i = 0; i < _tileRows; i++)
+            for (int i = 0; i < _tileCount; i++)
             {
-                for (int j = 0; j < _tileCols; j++)
-                {                    
-                    panel.Children.Add(tiles[i,j].rect);
-                }                
+                panel.Children.Add(tiles[i].rect);                               
             }
-            panel.Width = _tileCols * (_tileSize + _tileMargin + _tileMargin);
+            panel.Width = Math.Floor(Math.Sqrt(_tileCount)) * (_tileSize + _tileMargin + _tileMargin);
         }
 
         private void GenerateTiles()
         {
             // generate tiles
-            for (int i = 0; i < _tileRows; i++)
+            for (int i = 0; i < _tileCount; i++)
             {
-                for (int j = 0; j < _tileCols; j++)
-                {
-                    tiles[i, j] = new Tile(_tileSize, _tileMargin, this);
-                }
+                tiles[i] = new Tile(_tileSize, _tileMargin, this);
             }     
 
             // set images
             double index = 0;
-            for (int i = 0; i < _tileRows; i++)
+            for (int i = 0; i < _tileCount; i++)
             {
-                for (int j = 0; j < _tileCols; j++)
-                {
-                    byte imageName = (byte)Math.Floor(index / 2);
-
-                    tiles[i,j].SetImage(new BitmapImage(new Uri("pack://application:,,,/Assets/" + imageName.ToString() + ".png")), imageName);
-
-                    index++;
-                }
+                byte imageName = (byte)Math.Floor(index / 2);
+                tiles[i].SetImage(new BitmapImage(new Uri("pack://application:,,,/Assets/" + imageName.ToString() + ".png")), imageName);
+                index++;                
             }
 
             // TODO: shuffle tiles
