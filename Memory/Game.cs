@@ -1,19 +1,13 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+using System.ComponentModel;
 using System.Windows.Controls;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using System.Windows.Threading;
 
-namespace Memory
+namespace Memory 
 {
-    public class Game
+    public class Game : INotifyPropertyChanged
     {
         private const int _tileSize = 60;
         private const int _tileCount = 16;
@@ -22,15 +16,51 @@ namespace Memory
         private WrapPanel panel;
         private Random rand;
 
-        Tile[] tiles;
-        
+        private Tile[] tiles;
+        private DispatcherTimer timer;
         private List<Tile> _selectedTiles;
+        private int tilesLeft;
+
+        private DateTime _startTime;
+
+        private TimeSpan _time;
+        public TimeSpan time
+        {
+            get
+            {
+                return _time;
+            }
+            set
+            {
+                _time = value;
+                NotifyPropertyChanged("time");
+            }
+        }
+
+        private int _clicks;
+        public int clicks
+        {
+            get
+            {
+                return _clicks;
+            }
+            set
+            {
+                _clicks = value;
+                NotifyPropertyChanged("clicks");
+            }
+        }
 
         public Game(WrapPanel panel)
         {
             this.panel = panel;
             tiles = new Tile[_tileCount];
             rand = new Random();
+            timer = new DispatcherTimer() { Interval = TimeSpan.FromSeconds(1) };
+            timer.Tick += (sender, args) =>
+                {
+                    time = DateTime.Now - _startTime;
+                };
         }
 
         public void NewGame()
@@ -38,16 +68,19 @@ namespace Memory
             _selectedTiles = new List<Tile>();
             GenerateTiles();
             SetBoard();
+            _startTime = DateTime.Now;
+            clicks = 0;
+            timer.Start();
+        }
+
+        public void GameOver()
+        {
+            timer.Stop();
         }
 
         public void TileClicked(Tile t)
         {
-            // if tile is disabled
-            //if (t.enabled == false)
-            //{
-            //    return;
-            //}
-
+            clicks++;
             // if tile eas already selected
             if (_selectedTiles.Contains(t))
             {
@@ -79,6 +112,10 @@ namespace Memory
                 {
                     PairFound();
                     _selectedTiles.Clear();
+                    if (tilesLeft == 0)
+                    {
+                        GameOver();
+                    }
                     return;
                 }
 
@@ -99,6 +136,8 @@ namespace Memory
         {
             _selectedTiles[0].Hide();
             _selectedTiles[1].Hide();
+
+            tilesLeft -= 2;
         }
 
         private void SetBoard()
@@ -129,8 +168,8 @@ namespace Memory
                 index++;                
             }
 
-            // TODO: shuffle tiles
             ShuffleTiles(tiles);
+            tilesLeft = _tileCount;
         }
 
         private void ShuffleTiles(Tile[] t, int n = -1)
@@ -146,6 +185,16 @@ namespace Memory
                 Tile tmp = t[index];
                 t[index] = t[n - 1];
                 t[n - 1] = tmp;
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        private void NotifyPropertyChanged(String info)
+        {
+            var handler = PropertyChanged;
+            if (handler != null)
+            {
+                handler(this, new PropertyChangedEventArgs(info));
             }
         }
     }
