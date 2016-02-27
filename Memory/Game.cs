@@ -20,6 +20,7 @@ namespace Memory
         private const int _tileMargin = 5;
 
         private WrapPanel panel;
+        private Random rand;
 
         Tile[] tiles;
         
@@ -29,6 +30,7 @@ namespace Memory
         {
             this.panel = panel;
             tiles = new Tile[_tileCount];
+            rand = new Random();
         }
 
         public void NewGame()
@@ -128,7 +130,23 @@ namespace Memory
             }
 
             // TODO: shuffle tiles
-            
+            ShuffleTiles(tiles);
+        }
+
+        private void ShuffleTiles(Tile[] t, int n = -1)
+        {
+            if (n == -1)
+            {
+                n = t.Length;
+            }
+            if (n > 0)
+            {
+                ShuffleTiles(t, n - 1);
+                int index = rand.Next(n - 1);
+                Tile tmp = t[index];
+                t[index] = t[n - 1];
+                t[n - 1] = tmp;
+            }
         }
     }
 }
