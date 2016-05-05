@@ -20,6 +20,25 @@ namespace Memory
         private List<Tile> _selectedTiles;
         private int tilesLeft;
 
+        private bool _isStarted;
+        public bool isStarted
+        {
+            get { return _isStarted; }
+            set 
+            {
+                _isStarted = value;
+                if (value == true)
+                {
+                    _startTime = DateTime.Now;
+                    timer.Start();
+                }
+                else
+                {
+                    timer.Stop();
+                }
+            }
+        }
+
         private DateTime _startTime;
 
         private int _tileCount; // = 36
@@ -77,22 +96,27 @@ namespace Memory
         public void NewGame(int size)
         {
             _selectedTiles = new List<Tile>();
-            _tileCount = size;
+            tileCount = size;
             GenerateTiles();
-            SetBoard();
-            _startTime = DateTime.Now;
+            SetBoard();            
             clicks = 0;
-            timer.Start();
+            time = new TimeSpan();
+            isStarted = false;
             
         }
 
         public void GameOver()
         {
-            timer.Stop();
+            isStarted = false;
         }
 
         public void TileClicked(Tile t)
         {
+            if (isStarted == false)
+            {
+                isStarted = true;
+            }            
+
             clicks++;
             // if tile eas already selected
             if (_selectedTiles.Contains(t))
