@@ -29,6 +29,17 @@ namespace Memory
             isEnabled = true;
         }
 
+        public Tile(Tile t)
+        {
+            this.rect = new Rectangle() { Height = t.rect.Height, Width = t.rect.Width, Margin = new Thickness(t.rect.Margin.Bottom), Stroke = Brushes.Black, Fill = Brushes.Gray };
+            this.isUp = false;
+            this.theGame = t.theGame;
+            this.rect.MouseLeftButtonUp += rect_MouseLeftButtonUp;
+            this.isEnabled = true;
+            this.image = t.image;
+            this.pair = t.pair;
+        }
+
         void rect_MouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             if (isEnabled)

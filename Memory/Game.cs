@@ -11,11 +11,13 @@ namespace Memory
     {
         private const int _tileSize = 60;
         private const int _tileMargin = 5;
+        private const int _maxTileCount = 36;
 
         private WrapPanel panel;
         private Random rand;
 
         private Tile[] tiles;
+        private Tile[] shuffledTiles;
         private DispatcherTimer timer;
         private List<Tile> _selectedTiles;
         private int tilesLeft;
@@ -84,22 +86,24 @@ namespace Memory
         {
             this.panel = panel;
             this._tileCount = size;
-            tiles = new Tile[_tileCount];
+            tiles = new Tile[_maxTileCount];
             rand = new Random();
             timer = new DispatcherTimer() { Interval = TimeSpan.FromSeconds(1) };
             timer.Tick += (sender, args) =>
                 {
                     time = DateTime.Now - _startTime;
                 };
+            GenerateTiles();
         }
 
         public void NewGame(int size)
         {
             _selectedTiles = new List<Tile>();
             tileCount = size;
-            GenerateTiles();
+            shuffledTiles = ShuffleTiles(tiles);
             SetBoard();            
             clicks = 0;
+            tilesLeft = tileCount;
             time = new TimeSpan();
             isStarted = false;
             
@@ -183,7 +187,7 @@ namespace Memory
 
             for (int i = 0; i < _tileCount; i++)
             {
-                panel.Children.Add(tiles[i].rect);                               
+                panel.Children.Add(shuffledTiles[i].rect);                               
             }
             panel.Width = Math.Floor(Math.Sqrt(_tileCount)) * (_tileSize + _tileMargin + _tileMargin);
         }
@@ -204,25 +208,26 @@ namespace Memory
                 tiles[i].SetImage(new BitmapImage(new Uri("pack://application:,,,/Assets/" + imageName.ToString() + ".png")), imageName);
                 index++;                
             }
-
-            ShuffleTiles(tiles);
-            tilesLeft = _tileCount;
         }
 
-        private void ShuffleTiles(Tile[] t, int n = -1)
+        private Tile[] ShuffleTiles(Tile[] t)
         {
-            if (n == -1)
+            List<Tile> source = new List<Tile>();
+            List<Tile> result = new List<Tile>();
+
+            for (int i = 0; i < tileCount; i++)
             {
-                n = t.Length;
+                source.Add(new Tile(t[i]));
             }
-            if (n > 0)
+
+            while (source.Count > 0)
             {
-                ShuffleTiles(t, n - 1);
-                int index = rand.Next(n - 1);
-                Tile tmp = t[index];
-                t[index] = t[n - 1];
-                t[n - 1] = tmp;
+                int index = rand.Next(source.Count - 1);
+                result.Add(source[index]);
+                source.RemoveAt(index);
             }
+
+            return result.ToArray();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
