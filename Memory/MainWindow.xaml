@@ -19,7 +19,11 @@
             </StackPanel>
             
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="40" DockPanel.Dock="Bottom">
-                <Button Content="New Game" Width="85" Margin="5" Click="Button_Click_1" />                
+                <Button Content="New Game" Width="85" Margin="5" Click="Button_Click_1" /> 
+                <StackPanel VerticalAlignment="Center">
+                    <RadioButton x:Name="Size4RB" Content="4x4" GroupName="SizeGroup" />
+                    <RadioButton x:Name="Size5RB" Content="5x5" GroupName="SizeGroup" IsChecked="True" />
+                </StackPanel>
                 <Button Content="Exit" Width="85" Margin="5" Click="Button_Click" />
             </StackPanel>
             <WrapPanel x:Name="BoardWrapPanel"/>

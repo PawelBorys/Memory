@@ -10,7 +10,6 @@ namespace Memory
     public class Game : INotifyPropertyChanged
     {
         private const int _tileSize = 60;
-        private const int _tileCount = 16;
         private const int _tileMargin = 5;
 
         private WrapPanel panel;
@@ -22,6 +21,17 @@ namespace Memory
         private int tilesLeft;
 
         private DateTime _startTime;
+
+        private int _tileCount; // = 36
+        public int tileCount
+        {
+            get { return _tileCount; }
+            set
+            {
+                _tileCount = value;
+                NotifyPropertyChanged("tileCount");
+            }
+        }
 
         private TimeSpan _time;
         public TimeSpan time
@@ -51,9 +61,10 @@ namespace Memory
             }
         }
 
-        public Game(WrapPanel panel)
+        public Game(WrapPanel panel, int size)
         {
             this.panel = panel;
+            this._tileCount = size;
             tiles = new Tile[_tileCount];
             rand = new Random();
             timer = new DispatcherTimer() { Interval = TimeSpan.FromSeconds(1) };
@@ -63,14 +74,16 @@ namespace Memory
                 };
         }
 
-        public void NewGame()
+        public void NewGame(int size)
         {
             _selectedTiles = new List<Tile>();
+            _tileCount = size;
             GenerateTiles();
             SetBoard();
             _startTime = DateTime.Now;
             clicks = 0;
             timer.Start();
+            
         }
 
         public void GameOver()
