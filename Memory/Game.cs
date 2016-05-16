@@ -13,14 +13,15 @@ namespace Memory
         private const int _tileMargin = 5;
         private const int _maxTileCount = 36;
 
-        private WrapPanel panel;
-        private Random rand;
+        private WrapPanel _panel;
+        private Random _and;
 
-        private Tile[] tiles;
-        private Tile[] shuffledTiles;
-        private DispatcherTimer timer;
+        private Tile[] _tiles;
+        private Tile[] _shuffledTiles;
+        private DispatcherTimer _timer;
+        DispatcherTimer _tileShowTimer;
         private List<Tile> _selectedTiles;
-        private int tilesLeft;
+        private int _tilesLeft;
 
         private bool _isStarted;
         public bool isStarted
@@ -32,11 +33,11 @@ namespace Memory
                 if (value == true)
                 {
                     _startTime = DateTime.Now;
-                    timer.Start();
+                    _timer.Start();
                 }
                 else
                 {
-                    timer.Stop();
+                    _timer.Stop();
                 }
             }
         }
@@ -84,15 +85,24 @@ namespace Memory
 
         public Game(WrapPanel panel, int size)
         {
-            this.panel = panel;
+            this._panel = panel;
             this._tileCount = size;
-            tiles = new Tile[_maxTileCount];
-            rand = new Random();
-            timer = new DispatcherTimer() { Interval = TimeSpan.FromSeconds(1) };
-            timer.Tick += (sender, args) =>
+            _tiles = new Tile[_maxTileCount];
+            _and = new Random();
+            _timer = new DispatcherTimer() { Interval = TimeSpan.FromSeconds(1) };
+            _timer.Tick += (sender, args) =>
                 {
                     time = DateTime.Now - _startTime;
                 };
+
+            _tileShowTimer = new DispatcherTimer() { Interval = TimeSpan.FromSeconds(1) };
+            _tileShowTimer.Tick += (sender, args) =>
+            {
+                _tileShowTimer.Stop();
+                _selectedTiles[0].ChangeUp();
+                _selectedTiles[1].ChangeUp();
+                _selectedTiles.Clear();
+            }; 
             GenerateTiles();
         }
 
@@ -100,13 +110,13 @@ namespace Memory
         {
             _selectedTiles = new List<Tile>();
             tileCount = size;
-            shuffledTiles = ShuffleTiles(tiles);
+            _shuffledTiles = ShuffleTiles(_tiles);
             SetBoard();            
             clicks = 0;
-            tilesLeft = tileCount;
+            _tilesLeft = tileCount;
             time = new TimeSpan();
             isStarted = false;
-            
+            _tileShowTimer.Stop();
         }
 
         public void GameOver()
@@ -153,23 +163,15 @@ namespace Memory
                 {
                     PairFound();
                     _selectedTiles.Clear();
-                    if (tilesLeft == 0)
+                    if (_tilesLeft == 0)
                     {
                         GameOver();
                     }
                     return;
                 }
 
-                DispatcherTimer timer = new DispatcherTimer() { Interval = TimeSpan.FromSeconds(1) };
-
-                timer.Start();
-                timer.Tick += (sender, args) =>
-                    {
-                        timer.Stop();
-                        _selectedTiles[0].ChangeUp();
-                        _selectedTiles[1].ChangeUp();
-                        _selectedTiles.Clear();
-                    };                
+                _tileShowTimer.Start();
+                               
             }
         }
 
@@ -178,18 +180,18 @@ namespace Memory
             _selectedTiles[0].Hide();
             _selectedTiles[1].Hide();
 
-            tilesLeft -= 2;
+            _tilesLeft -= 2;
         }
 
         private void SetBoard()
         {
-            panel.Children.Clear();
+            _panel.Children.Clear();
 
             for (int i = 0; i < _tileCount; i++)
             {
-                panel.Children.Add(shuffledTiles[i].rect);                               
+                _panel.Children.Add(_shuffledTiles[i].rect);                               
             }
-            panel.Width = Math.Floor(Math.Sqrt(_tileCount)) * (_tileSize + _tileMargin + _tileMargin);
+            _panel.Width = Math.Floor(Math.Sqrt(_tileCount)) * (_tileSize + _tileMargin + _tileMargin);
         }
 
         private void GenerateTiles()
@@ -197,7 +199,7 @@ namespace Memory
             // generate tiles
             for (int i = 0; i < _tileCount; i++)
             {
-                tiles[i] = new Tile(_tileSize, _tileMargin, this);
+                _tiles[i] = new Tile(_tileSize, _tileMargin, this);
             }     
 
             // set images
@@ -205,7 +207,7 @@ namespace Memory
             for (int i = 0; i < _tileCount; i++)
             {
                 byte imageName = (byte)Math.Floor(index / 2);
-                tiles[i].SetImage(new BitmapImage(new Uri("pack://application:,,,/Assets/" + imageName.ToString() + ".png")), imageName);
+                _tiles[i].SetImage(new BitmapImage(new Uri("pack://application:,,,/Assets/" + imageName.ToString() + ".png")), imageName);
                 index++;                
             }
         }
@@ -222,7 +224,7 @@ namespace Memory
 
             while (source.Count > 0)
             {
-                int index = rand.Next(source.Count - 1);
+                int index = _and.Next(source.Count);
                 result.Add(source[index]);
                 source.RemoveAt(index);
             }
