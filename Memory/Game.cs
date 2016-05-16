@@ -14,7 +14,7 @@ namespace Memory
         private const int _maxTileCount = 36;
 
         private WrapPanel _panel;
-        private Random _and;
+        private Random _rand;
 
         private Tile[] _tiles;
         private Tile[] _shuffledTiles;
@@ -88,7 +88,7 @@ namespace Memory
             this._panel = panel;
             this._tileCount = size;
             _tiles = new Tile[_maxTileCount];
-            _and = new Random();
+            _rand = new Random();
             _timer = new DispatcherTimer() { Interval = TimeSpan.FromSeconds(1) };
             _timer.Tick += (sender, args) =>
                 {
@@ -224,7 +224,7 @@ namespace Memory
 
             while (source.Count > 0)
             {
-                int index = _and.Next(source.Count);
+                int index = _rand.Next(source.Count);
                 result.Add(source[index]);
                 source.RemoveAt(index);
             }
