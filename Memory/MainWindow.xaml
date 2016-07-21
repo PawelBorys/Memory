@@ -4,9 +4,9 @@
         Title="MainWindow" Height="350" Width="525" Loaded="Window_Loaded" SizeToContent="Height" WindowStartupLocation="CenterScreen">
     <Grid>
         <DockPanel LastChildFill="True">
-            <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" Height="40">
-                <Label Content="Timer:" VerticalAlignment="Center" />
-                <TextBlock VerticalAlignment="Center">
+            <DockPanel DockPanel.Dock="Top" Height="40" LastChildFill="False">
+                <Label Content="Timer:" VerticalAlignment="Center" DockPanel.Dock="Left" />
+                <TextBlock VerticalAlignment="Center" DockPanel.Dock="Left">
                     <TextBlock.Text>
                         <MultiBinding StringFormat="{}{0:0}:{1:00}">
                             <Binding Path="time.Minutes"/>
@@ -14,9 +14,10 @@
                         </MultiBinding>
                     </TextBlock.Text>
                 </TextBlock>
-                <Label Content="Clicks: " VerticalAlignment="Center" />
-                <TextBlock Text="{Binding clicks}" VerticalAlignment="Center" />
-            </StackPanel>
+                <Label Content="Clicks: " VerticalAlignment="Center" DockPanel.Dock="Left" />
+                <TextBlock Text="{Binding clicks}" VerticalAlignment="Center" DockPanel.Dock="Left" />
+                <TextBlock Text="Highscores" MouseLeftButtonUp="Button_Click_2" DockPanel.Dock="Right" Margin="0,0,5,0" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#FF083B95" FontWeight="Bold" TextDecorations="Underline" Cursor="Hand" />
+            </DockPanel>
             
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="40" DockPanel.Dock="Bottom">
                 <Button Content="New Game" Width="85" Margin="5" Click="Button_Click_1" /> 

@@ -42,5 +42,19 @@ namespace Memory
                 return 36;
             }
         }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            using (StatsContext db = new StatsContext())
+            {
+
+            }
+        }
+
+        private void Button_Click_2(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            StatsWindow sw = new StatsWindow();
+            sw.Show();
+        }
     }
 }
