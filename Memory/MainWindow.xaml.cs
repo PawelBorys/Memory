@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 
 namespace Memory
 {
@@ -12,6 +13,7 @@ namespace Memory
         public MainWindow()
         {
             InitializeComponent();
+            AppDomain.CurrentDomain.SetData("DataDirectory", System.IO.Directory.GetCurrentDirectory());
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
