@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Controls;
@@ -122,6 +123,27 @@ namespace Memory
         public void GameOver()
         {
             isStarted = false;
+            SaveHighscore();
+        }
+
+        private void SaveHighscore()
+        {
+            using (StatsContext context = new StatsContext())
+            {
+                int minScore = (from h in context.highscores
+                               select h.clicks).Min();
+
+                if (clicks > minScore)
+                {
+                    String name;
+                    
+
+                    context.highscores.Add(new Stat() { name = "-", clicks = this.clicks, time = this.time, isFive = (Math.Sqrt(tileCount) == 5) });
+                    context.SaveChanges();
+                }
+
+                
+            }
         }
 
         public void TileClicked(Tile t)

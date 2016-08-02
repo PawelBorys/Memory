@@ -9,6 +9,7 @@ namespace Memory
     public partial class MainWindow : Window
     {
         public Game theGame;
+        StatsWindow sw;
                     
         public MainWindow()
         {
@@ -45,18 +46,15 @@ namespace Memory
             }
         }
 
-        private void Button_Click_2(object sender, RoutedEventArgs e)
-        {
-            using (StatsContext db = new StatsContext())
-            {
-
-            }
-        }
-
         private void Button_Click_2(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            StatsWindow sw = new StatsWindow();
-            sw.Show();
+            if (sw == null || !sw.IsVisible)
+            {
+                sw = new StatsWindow();
+                sw.Show();
+            }
+            
+            
         }
     }
 }

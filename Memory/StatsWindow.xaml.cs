@@ -25,12 +25,12 @@ namespace Memory
         {
             InitializeComponent();
             
-            LoadHighscores();
+            //LoadHighscores();
         }
 
         private void Window_Activated(object sender, EventArgs e)
         {
-            //LoadHighscores();
+            LoadHighscores();
         }
 
         void LoadHighscores()
