@@ -53,8 +53,6 @@ namespace Memory
                 sw = new StatsWindow();
                 sw.Show();
             }
-            
-            
         }
     }
 }

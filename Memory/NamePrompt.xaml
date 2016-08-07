@@ -1,0 +1,15 @@
+﻿<Window x:Class="Memory.NamePrompt"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Highscore" Height="166.196" Width="300" Activated="Window_Activated" WindowStartupLocation="CenterScreen" ShowInTaskbar="False" ResizeMode="NoResize">
+    <Grid>
+        <DockPanel LastChildFill="False"> 
+            <TextBlock Text="Enter your name:" DockPanel.Dock="Top" Margin="10" />
+            <TextBox x:Name="NameTB" DockPanel.Dock="Top" Margin="10" Text="{Binding playerName}" />
+            <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom" HorizontalAlignment="Center">
+                <Button Click="Button_Click" Content="OK" DockPanel.Dock="Bottom" Width="100" Height="30" Margin="10" />
+                <Button Content="Cancel" DockPanel.Dock="Bottom" Width="100" Height="30" Margin="10" IsCancel="True" />
+            </StackPanel>
+        </DockPanel>
+    </Grid>
+</Window>

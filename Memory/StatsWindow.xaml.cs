@@ -38,7 +38,7 @@ namespace Memory
             using (StatsContext context = new StatsContext())
             {
                 stats = (from h in context.highscores
-                        select h).ToList<Stat>();                
+                         select h).OrderBy(x => x.clicks).ToList<Stat>();
             }
             FivesGrid.ItemsSource = stats;
         }

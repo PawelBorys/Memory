@@ -135,14 +135,17 @@ namespace Memory
 
                 if (clicks > minScore)
                 {
-                    String name;
-                    
+                    NamePrompt np = new NamePrompt();
+                    np.ShowDialog();
 
-                    context.highscores.Add(new Stat() { name = "-", clicks = this.clicks, time = this.time, isFive = (Math.Sqrt(tileCount) == 5) });
-                    context.SaveChanges();
+                    if (np.DialogResult == true)
+                    {
+                        string playerName = np.playerName;
+
+                        context.highscores.Add(new Stat() { name = playerName, clicks = this.clicks, time = this.time, isFive = (Math.Sqrt(tileCount) == 5) });
+                        context.SaveChanges();
+                    }                    
                 }
-
-                
             }
         }
 
