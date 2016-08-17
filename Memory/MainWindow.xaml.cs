@@ -15,6 +15,11 @@ namespace Memory
         {
             InitializeComponent();
             AppDomain.CurrentDomain.SetData("DataDirectory", System.IO.Directory.GetCurrentDirectory());
+
+            // initialize database connection now, because it takes some time
+            StatsContext sc = new StatsContext();
+            sc.highscores.ToString();
+            sc.Dispose();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -34,6 +39,9 @@ namespace Memory
             theGame.NewGame(GetSize());
         }
 
+        /// <summary>
+        /// Get number of cards on the board
+        /// </summary>
         private int GetSize()
         {
             if ((bool)Size4RB.IsChecked)
@@ -48,7 +56,7 @@ namespace Memory
 
         private void Button_Click_2(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            if (sw == null || !sw.IsVisible)
+            if (sw == null || !sw.IsVisible)        // don't open more than one highscore window, please
             {
                 sw = new StatsWindow();
                 sw.Show();

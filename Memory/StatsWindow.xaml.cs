@@ -24,8 +24,6 @@ namespace Memory
         public StatsWindow()
         {
             InitializeComponent();
-            
-            //LoadHighscores();
         }
 
         private void Window_Activated(object sender, EventArgs e)
@@ -41,15 +39,6 @@ namespace Memory
                          select h).OrderBy(x => x.clicks).ToList<Stat>();
             }
             FivesGrid.ItemsSource = stats;
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            using (StatsContext context = new StatsContext())
-            {
-                context.highscores.Add(new Stat() { name = "test1", clicks = 12, time = new TimeSpan(100), isFive = true });
-                context.SaveChanges();
-            }
         }
     }
 }
