@@ -130,10 +130,12 @@ namespace Memory
         {
             using (StatsContext context = new StatsContext())
             {
-                int minScore = (from h in context.highscores
-                               select h.clicks).Min();
+                var scores = (from h in context.highscores
+                         select h.clicks).ToArray();
 
-                if (clicks > minScore)
+                int maxScore = scores.Max();
+
+                if (clicks < maxScore || scores.Count() < 10)
                 {
                     NamePrompt np = new NamePrompt();
                     np.ShowDialog();
@@ -144,6 +146,8 @@ namespace Memory
 
                         context.highscores.Add(new Stat() { name = playerName, clicks = this.clicks, time = this.time, isFive = (Math.Sqrt(tileCount) == 5) });
                         context.SaveChanges();
+
+                        HighscoreWindowManager.Show();
                     }                    
                 }
             }

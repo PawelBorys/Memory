@@ -60,6 +60,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="HighscoreWindowManager.cs" />
     <Compile Include="TimeConverter.cs" />
     <Compile Include="NamePrompt.xaml.cs">
       <DependentUpon>NamePrompt.xaml</DependentUpon>

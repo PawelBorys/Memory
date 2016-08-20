@@ -9,7 +9,7 @@ namespace Memory
     public partial class MainWindow : Window
     {
         public Game theGame;
-        StatsWindow sw;
+        
                     
         public MainWindow()
         {
@@ -56,11 +56,7 @@ namespace Memory
 
         private void Button_Click_2(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            if (sw == null || !sw.IsVisible)        // don't open more than one highscore window, please
-            {
-                sw = new StatsWindow();
-                sw.Show();
-            }
+            HighscoreWindowManager.Show();
         }
     }
 }
