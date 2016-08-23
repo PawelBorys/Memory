@@ -142,12 +142,13 @@ namespace Memory
 
                     if (np.DialogResult == true)
                     {
+                        bool isSizeFour = Math.Sqrt(tileCount) == 4;
                         string playerName = np.playerName;
 
-                        context.highscores.Add(new Stat() { name = playerName, clicks = this.clicks, time = this.time, isFive = (Math.Sqrt(tileCount) == 5) });
+                        context.highscores.Add(new Stat() { name = playerName, clicks = this.clicks, time = this.time, isFour = isSizeFour });
                         context.SaveChanges();
 
-                        HighscoreWindowManager.Show();
+                        HighscoreWindowManager.Show(isSizeFour);
                     }                    
                 }
             }

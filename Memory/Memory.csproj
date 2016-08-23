@@ -61,6 +61,15 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="HighscoreWindowManager.cs" />
+    <Compile Include="Migrations\201607211259166_InitialCreate.cs" />
+    <Compile Include="Migrations\201607211259166_InitialCreate.Designer.cs">
+      <DependentUpon>201607211259166_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201608231603543_FivesToFours.cs" />
+    <Compile Include="Migrations\201608231603543_FivesToFours.Designer.cs">
+      <DependentUpon>201608231603543_FivesToFours.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="TimeConverter.cs" />
     <Compile Include="NamePrompt.xaml.cs">
       <DependentUpon>NamePrompt.xaml</DependentUpon>
@@ -106,6 +115,12 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EmbeddedResource Include="Migrations\201607211259166_InitialCreate.resx">
+      <DependentUpon>201607211259166_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608231603543_FivesToFours.resx">
+      <DependentUpon>201608231603543_FivesToFours.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

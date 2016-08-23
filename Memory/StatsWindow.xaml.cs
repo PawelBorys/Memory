@@ -19,7 +19,8 @@ namespace Memory
     /// </summary>
     public partial class StatsWindow : Window
     {
-        List<Stat> stats;
+        List<Stat> stats4;
+        List<Stat> stats6;
 
         public StatsWindow()
         {
@@ -35,10 +36,16 @@ namespace Memory
         {
             using (StatsContext context = new StatsContext())
             {
-                stats = (from h in context.highscores
-                         select h).OrderBy(x => x.clicks).ToList<Stat>();
+                stats4 = (from h in context.highscores
+                          where h.isFour == true
+                          select h).OrderBy(x => x.clicks).ToList<Stat>();
+
+                stats6 = (from h in context.highscores
+                          where h.isFour == false
+                          select h).OrderBy(x => x.clicks).ToList<Stat>();
             }
-            FivesGrid.ItemsSource = stats;
+            FoursGrid.ItemsSource = stats4;
+            SixesGrid.ItemsSource = stats6;
         }
     }
 }

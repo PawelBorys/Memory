@@ -56,7 +56,7 @@ namespace Memory
 
         private void Button_Click_2(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            HighscoreWindowManager.Show();
+            HighscoreWindowManager.Show(Size4RB.IsChecked == true);
         }
     }
 }

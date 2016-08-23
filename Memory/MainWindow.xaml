@@ -23,7 +23,7 @@
                 <Button Content="New Game" Width="85" Margin="5" Click="Button_Click_1" /> 
                 <StackPanel VerticalAlignment="Center">
                     <RadioButton x:Name="Size4RB" Content="4x4" GroupName="SizeGroup" />
-                    <RadioButton x:Name="Size5RB" Content="5x5" GroupName="SizeGroup" IsChecked="True" />
+                    <RadioButton x:Name="Size6RB" Content="6x6" GroupName="SizeGroup" IsChecked="True" />
                 </StackPanel>
                 <Button Content="Exit" Width="85" Margin="5" Click="Button_Click" />
             </StackPanel>

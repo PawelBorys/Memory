@@ -13,7 +13,7 @@ namespace Memory
         public string name { get; set; }
         public int clicks { get; set; }
         public TimeSpan time { get; set; }
-        public bool isFive { get; set; }
+        public bool isFour { get; set; }
     }
 
     public class StatsContext : DbContext
