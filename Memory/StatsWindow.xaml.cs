@@ -47,5 +47,23 @@ namespace Memory
             FoursGrid.ItemsSource = stats4;
             SixesGrid.ItemsSource = stats6;
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void TextBlock_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            MessageBoxResult dialogResult = MessageBox.Show("Do you want do erase all highscores?", "Are you sure?", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (dialogResult == MessageBoxResult.Yes)
+            {
+                using (StatsContext context = new StatsContext())
+                {
+                    context.Database.ExecuteSqlCommand("delete from Stats");
+                    this.Close();      
+                }
+            }
+        }
     }
 }

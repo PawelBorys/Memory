@@ -130,19 +130,21 @@ namespace Memory
         {
             using (StatsContext context = new StatsContext())
             {
+                bool isSizeFour = Math.Sqrt(tileCount) == 4;
+
                 var scores = (from h in context.highscores
-                         select h.clicks).ToArray();
+                              where h.isFour == isSizeFour
+                              select h.clicks).ToArray();
 
                 int maxScore = scores.Max();
 
-                if (clicks < maxScore || scores.Count() < 10)
+                if (clicks < maxScore || scores.Count() < 10)       // if the score is better than the worst score in the highscores or there is less than 10 scores saved
                 {
                     NamePrompt np = new NamePrompt();
                     np.ShowDialog();
 
-                    if (np.DialogResult == true)
-                    {
-                        bool isSizeFour = Math.Sqrt(tileCount) == 4;
+                    if (np.DialogResult == true)        // if player provided their name
+                    {                        
                         string playerName = np.playerName;
 
                         context.highscores.Add(new Stat() { name = playerName, clicks = this.clicks, time = this.time, isFour = isSizeFour });

@@ -2,7 +2,7 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:Memory"
-        Title="Highscore" Height="300" Width="300" Activated="Window_Activated" WindowStartupLocation="CenterScreen">
+        Title="Highscore" Height="325" Width="300" Activated="Window_Activated" WindowStartupLocation="CenterScreen" >
     <Window.Resources>
         <local:TimeConverter x:Key="timeConverter" />
         <Style TargetType="{x:Type DataGridCell}">
@@ -16,29 +16,34 @@
             </Style.Triggers>
         </Style>
     </Window.Resources>
-    
 
 
     <Grid>
-        <TabControl Padding="0" UseLayoutRounding="True">
-            <TabItem x:Name="FoursTabItem" Header="5x5">
-                <DataGrid x:Name="FoursGrid" Margin="0,0,0,0" AutoGenerateColumns="False" CanUserReorderColumns="False" CanUserSortColumns="False" IsReadOnly="True" AlternatingRowBackground="#FFE7FFE4" HorizontalGridLinesBrush="#FFB8ECC6" VerticalGridLinesBrush="#FFD6FFDA" Focusable="False" SelectionUnit="Cell" CanUserResizeRows="False">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="Name" Binding="{Binding name}"/>
-                        <DataGridTextColumn Header="Score" Binding="{Binding clicks}"/>
-                        <DataGridTextColumn Header="Time" Binding="{Binding time, Converter={StaticResource timeConverter}}"/>
-                    </DataGrid.Columns>
-                </DataGrid>
-            </TabItem>
-            <TabItem x:Name="SixesTabItem" Header="6x6">
-                <DataGrid x:Name="SixesGrid" Margin="0,0,0,0" AutoGenerateColumns="False" CanUserReorderColumns="False" CanUserSortColumns="False" SelectionMode="Single" IsReadOnly="True" AlternatingRowBackground="#FFE7FFE4" HorizontalGridLinesBrush="#FFB8ECC6" VerticalGridLinesBrush="#FFD6FFDA" CanUserResizeRows="False">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="Name" Binding="{Binding name}"/>
-                        <DataGridTextColumn Header="Score" Binding="{Binding clicks}"/>
-                        <DataGridTextColumn Header="Time" Binding="{Binding time, Converter={StaticResource timeConverter}}"/>
-                    </DataGrid.Columns>
-                </DataGrid>
-            </TabItem>
-        </TabControl>
+        <DockPanel>
+            <Grid DockPanel.Dock="Bottom">
+                <Button Content="Close" Width="100" HorizontalAlignment="Left" Margin="5" Click="Button_Click" />
+                <TextBlock Text="Clear Highscores" HorizontalAlignment="Right" Margin="5" VerticalAlignment="Center" TextDecorations="Underline" Foreground="#FF083B95" FontWeight="Bold" MouseLeftButtonUp="TextBlock_MouseLeftButtonUp" />
+            </Grid>
+            <TabControl Padding="0" UseLayoutRounding="True" DockPanel.Dock="Top" Height="255" >
+                <TabItem x:Name="FoursTabItem" Header="4x4" >
+                    <DataGrid x:Name="FoursGrid" Margin="0,0,0,0" AutoGenerateColumns="False" CanUserReorderColumns="False" CanUserSortColumns="False" IsReadOnly="True" AlternatingRowBackground="#FFE7FFE4" HorizontalGridLinesBrush="#FFB8ECC6" VerticalGridLinesBrush="#FFD6FFDA" Focusable="False" SelectionUnit="Cell" CanUserResizeRows="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Name" Binding="{Binding name}"/>
+                            <DataGridTextColumn Header="Score" Binding="{Binding clicks}"/>
+                            <DataGridTextColumn Header="Time" Binding="{Binding time, Converter={StaticResource timeConverter}}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </TabItem>
+                <TabItem x:Name="SixesTabItem" Header="6x6">
+                    <DataGrid x:Name="SixesGrid" Margin="0,0,0,0" AutoGenerateColumns="False" CanUserReorderColumns="False" CanUserSortColumns="False" SelectionMode="Single" IsReadOnly="True" AlternatingRowBackground="#FFE7FFE4" HorizontalGridLinesBrush="#FFB8ECC6" VerticalGridLinesBrush="#FFD6FFDA" CanUserResizeRows="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Name" Binding="{Binding name}"/>
+                            <DataGridTextColumn Header="Score" Binding="{Binding clicks}"/>
+                            <DataGridTextColumn Header="Time" Binding="{Binding time, Converter={StaticResource timeConverter}}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </TabItem>
+            </TabControl>
+        </DockPanel>
     </Grid>
 </Window>
