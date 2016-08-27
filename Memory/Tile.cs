@@ -17,40 +17,42 @@ namespace Memory
         public BitmapImage image;
         public bool isUp;
         public byte pair;
-        private bool isEnabled;
-        private Game theGame;
+        private bool _isEnabled;
+        private Game _theGame;
+
+        private Brush _cardBack = new SolidColorBrush(Color.FromRgb(115, 183, 117));
 
         public Tile(int size, int margin, Game theGame)
         {
-            rect = new Rectangle() { Height = size, Width = size, Margin = new Thickness(margin), Stroke = Brushes.Black, Fill = Brushes.Gray };
+            rect = new Rectangle() { Height = size, Width = size, Margin = new Thickness(margin), Stroke = Brushes.Black, Fill = _cardBack };
             isUp = false;
-            this.theGame = theGame;
+            this._theGame = theGame;
             this.rect.MouseLeftButtonUp += rect_MouseLeftButtonUp;
-            isEnabled = true;
+            _isEnabled = true;
         }
 
         public Tile(Tile t)
         {
-            this.rect = new Rectangle() { Height = t.rect.Height, Width = t.rect.Width, Margin = new Thickness(t.rect.Margin.Bottom), Stroke = Brushes.Black, Fill = Brushes.Gray };
+            this.rect = new Rectangle() { Height = t.rect.Height, Width = t.rect.Width, Margin = new Thickness(t.rect.Margin.Bottom), Stroke = Brushes.Black, Fill = _cardBack };
             this.isUp = false;
-            this.theGame = t.theGame;
+            this._theGame = t._theGame;
             this.rect.MouseLeftButtonUp += rect_MouseLeftButtonUp;
-            this.isEnabled = true;
+            this._isEnabled = true;
             this.image = t.image;
             this.pair = t.pair;
         }
 
         void rect_MouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            if (isEnabled)
+            if (_isEnabled)
             {
-                theGame.TileClicked(this);
+                _theGame.TileClicked(this);
             }            
         }
 
         public void Hide()
         {
-            isEnabled = false;
+            _isEnabled = false;
 
             var anim = new DoubleAnimation()
             {
@@ -72,7 +74,7 @@ namespace Memory
         {
             if (isUp)
             {
-                rect.Fill = Brushes.Gray;
+                rect.Fill = _cardBack;
             }
             else
             {

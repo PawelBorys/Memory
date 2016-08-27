@@ -17,9 +17,9 @@ namespace Memory
             AppDomain.CurrentDomain.SetData("DataDirectory", System.IO.Directory.GetCurrentDirectory());
 
             // initialize database connection now, because it takes some time
-            StatsContext sc = new StatsContext();
+            /*StatsContext sc = new StatsContext();
             sc.highscores.ToString();
-            sc.Dispose();
+            sc.Dispose();*/
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
