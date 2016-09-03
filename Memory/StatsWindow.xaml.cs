@@ -38,11 +38,11 @@ namespace Memory
             {
                 stats4 = (from h in context.highscores
                           where h.isFour == true
-                          select h).OrderBy(x => x.clicks).ToList<Stat>();
+                          select h).Take(10).OrderBy(x => x.clicks).ToList<Stat>();
 
                 stats6 = (from h in context.highscores
                           where h.isFour == false
-                          select h).OrderBy(x => x.clicks).ToList<Stat>();
+                          select h).Take(10).OrderBy(x => x.clicks).ToList<Stat>();
             }
             FoursGrid.ItemsSource = stats4;
             SixesGrid.ItemsSource = stats6;
