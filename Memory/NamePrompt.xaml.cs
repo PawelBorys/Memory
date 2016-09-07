@@ -60,5 +60,25 @@ namespace Memory
         {
             NameTB.Focus();
         }
+
+        private void NameTB_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                this.DialogResult = true;
+                Close();
+            }
+            else if (e.Key == Key.Escape)
+            {
+                this.DialogResult = false;
+                Close();
+            }
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            this.DialogResult = false;
+            Close();
+        }
     }
 }

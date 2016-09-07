@@ -5,10 +5,10 @@
     <Grid>
         <DockPanel LastChildFill="False"> 
             <TextBlock Text="Enter your name:" DockPanel.Dock="Top" Margin="10" />
-            <TextBox x:Name="NameTB" DockPanel.Dock="Top" Margin="10" Text="{Binding playerName}" />
+            <TextBox x:Name="NameTB" DockPanel.Dock="Top" Margin="10" Text="{Binding playerName}" KeyUp="NameTB_KeyUp" />
             <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom" HorizontalAlignment="Center">
                 <Button Click="Button_Click" Content="OK" DockPanel.Dock="Bottom" Width="100" Height="30" Margin="10" />
-                <Button Content="Cancel" DockPanel.Dock="Bottom" Width="100" Height="30" Margin="10" IsCancel="True" />
+                <Button Content="Cancel" DockPanel.Dock="Bottom" Width="100" Height="30" Margin="10" IsCancel="True" Click="Button_Click_1" />
             </StackPanel>
         </DockPanel>
     </Grid>
